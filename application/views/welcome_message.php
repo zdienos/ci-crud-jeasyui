@@ -64,26 +64,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		box-shadow: 0 0 8px #D0D0D0;
 	}
 	</style>
+
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/easyui/themes/default/easyui.css'); ?>">
+<link rel="stylesheet" type="text/css" href="<?php echo base_url() .'assets/easyui/themes/icon.css'; ?>">
+<script type="text/javascript" src="<?php echo base_url() . 'assets/easyui/jquery.min.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo base_url() . 'assets/easyui/jquery.easyui.min.js'; ?>"></script>
+
 </head>
 <body>
 
 <div id="container">
 	<h1>Welcome to CodeIgniter!</h1>
-
+	<!-- https://www.jeasyui.com/tutorial/app/crud2.php -->
 	<div id="body">
-		<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
 
-		<p>If you would like to edit this page you'll find it located at:</p>
-		<code>application/views/welcome_message.php</code>
+		<table id="dg" title="My Users" style="width:550px;height:250px"
+		        toolbar="#toolbar" idField="id"
+		        rownumbers="true" fitColumns="true" singleSelect="true">
+		    <thead>
+		        <tr>
+		            <th field="firstname" width="50" editor="{type:'validatebox',options:{required:true}}">First Name</th>
+		            <th field="lastname" width="50" editor="{type:'validatebox',options:{required:true}}">Last Name</th>
+		            <th field="phone" width="50" editor="text">Phone</th>
+		            <th field="email" width="50" editor="{type:'validatebox',options:{validType:'email'}}">Email</th>
+		        </tr>
+		    </thead>
+		</table>
+		<div id="toolbar">
+		    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:$('#dg').edatagrid('addRow')">New</a>
+		    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="javascript:$('#dg').edatagrid('destroyRow')">Destroy</a>
+		    <a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:$('#dg').edatagrid('saveRow')">Save</a>
+		    <a href="#" class="easyui-linkbutton" iconCls="icon-undo" plain="true" onclick="javascript:$('#dg').edatagrid('cancelRow')">Cancel</a>
+		</div>
 
-		<p>The corresponding controller for this page is found at:</p>
-		<code>application/controllers/Welcome.php</code>
-
-		<p>If you are exploring CodeIgniter for the very first time, you should start by reading the <a href="user_guide/">User Guide</a>.</p>
 	</div>
 
-	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
 </div>
 
+<script>
+	$('#dg').edatagrid({
+    url: 'get_users.php',
+    saveUrl: 'save_user.php',
+    updateUrl: 'update_user.php',
+    destroyUrl: 'destroy_user.php'
+});
+</script>
 </body>
 </html>
